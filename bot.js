@@ -1,3 +1,4 @@
+/* global UserProfile */
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -27,6 +28,8 @@ const GREETING_INTENT = 'Greeting';
 const CANCEL_INTENT = 'Cancel';
 const HELP_INTENT = 'Help';
 const NONE_INTENT = 'None';
+const TIME_INTENT = 'Time';
+const ROUTER_INTENT = 'RouterHelp';
 
 // Supported LUIS Entities, defined in ./dialogs/greeting/resources/greeting.lu
 const USER_NAME_ENTITIES = ['userName', 'userName_patternAny'];
@@ -128,18 +131,28 @@ class BasicBot {
                 switch (dialogResult.status) {
                     // dc.continueDialog() returns DialogTurnStatus.empty if there are no active dialogs
                     case DialogTurnStatus.empty:
-                        // Determine what we should do based on the top intent from LUIS.
+                        // Determine what we should do based on the top intent from LUIS.                  
                         switch (topIntent) {
                             case GREETING_INTENT:
-                                await dc.beginDialog(GREETING_DIALOG);
+                                //await dc.beginDialog(GREETING_DIALOG);
+                                if (results.entities['userName'] === undefined)
+                                    await dc.context.sendActivity(`sei stupido`);
+                                else
+                                    await dc.context.sendActivity(`sei stupido ${results.entities['userName']}`);
+                                break;
+                            case TIME_INTENT:
+                                await dc.context.sendActivity(`the time is HH:MM`);
+                                break;
+                            case ROUTER_INTENT:
+                                await dc.context.sendActivity(`Have you tried turning it off and on again?`);
                                 break;
                             case NONE_INTENT:
                             default:
                                 // None or no intent identified, either way, let's provide some help
                                 // to the user
-                                await dc.context.sendActivity(`I didn't understand what you just said to me.`);
+                                await dc.context.sendActivity(`Wat did u just said to me faggot?!?`);
                                 break;
-                            }
+                        }
                         break;
                     case DialogTurnStatus.waiting:
                         // The active dialog is waiting for a response from the user, so do nothing.
