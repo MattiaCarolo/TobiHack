@@ -10,8 +10,8 @@ const { LuisRecognizer } = require('botbuilder-ai');
 const { DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 
 const { UserProfile } = require('./dialogs/greeting/userProfile');
-const { RouterInfo } = require('./dialogs/routerinfo/userProfile');
-const { RouterInstall } = require('./dialogs/routerinstall/userProfile');
+// const { RouterInfo } = require('./dialogs/routerinfo/userProfile');
+// const { RouterInstall } = require('./dialogs/routerinstall/userProfile');
 const { WelcomeCard } = require('./dialogs/welcome');
 const { GreetingDialog } = require('./dialogs/greeting');
 const { MyMessage } = require('./mymessage');
@@ -90,31 +90,26 @@ class BasicBot {
         this.conversationState = conversationState;
         this.userState = userState;
         
-        
         this.arrayconversazioni = [];
 
-        //inizializzazione di prova di arrayconversazioni
+        // inizializzazione di prova di arrayconversazioni
 
-
-
-        //prima di proseguire elimino le conversazioni vecchie
-        //cancellaConversazioniVecchie(this.arrayconversazioni);
-        this.ultimaconversazione=new MyConversation();
+        // prima di proseguire elimino le conversazioni vecchie
+        // cancellaConversazioniVecchie(this.arrayconversazioni);
+        this.ultimaconversazione = new MyConversation();
         this.arrayconversazioni.push(this.ultimaconversazione);
     }
 
-
-    differenzaTraDateMS( date1, date2 ) {
-        //Get 1 day in milliseconds
-        var one_day=1000*60*60*24;
+    differenzaTraDateMS(date1, date2) {
+        // Get 1 day in milliseconds
+        var one_day = 1000 * 60 * 60 * 24;
 
         // Calculate the difference in milliseconds
         var difference_ms = date2 - date1;
           
         // Convert back to days and return
-        return Math.round(difference_ms/one_day); 
+        return Math.round(difference_ms / one_day); 
       }
-
 
     async cancellaConversazioniVecchie(arrayconversazioni) {
         let i;
@@ -127,9 +122,6 @@ class BasicBot {
             }
         }
     }
-
-
-
 
     /**
      * Driver code that does one of the following:
@@ -146,10 +138,9 @@ class BasicBot {
         // see https://aka.ms/about-bot-activity-message to learn more about the message and other activity types
         if (context.activity.type === ActivityTypes.Message) {
                         
-            let tmp=new MyMessage(context.activity.text, context.activity.timestamp, context.activity.channelId);
-            this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
-            console.log(this.arrayconversazioni[this.arrayconversazioni.length-1]);
-            
+            let tmp = new MyMessage(context.activity.text, context.activity.timestamp, context.activity.channelId);
+            this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
+            console.log(this.arrayconversazioni[this.arrayconversazioni.length - 1]);
             
             let dialogResult;
             // Create a dialog context
@@ -189,41 +180,41 @@ class BasicBot {
                                 await dc.beginDialog(GREETING_DIALOG);
                                 if (results.entities['userName'] === undefined){
                                     var date = new Date();
-                                    tmp=new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot",topIntent);
-                                    this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+                                    tmp = new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot",topIntent);
+                                    this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
                                 }
                                 else{
                                     await dc.context.sendActivity(`Benvenuto nel sistema ${results.entities['userName']}`);
                                     var date = new Date();
-                                    tmp=new MyMessage(`Benvenuto nel sistema ${results.entities['userName']}`, date.getTime(), "bot", topIntent);
-                                    this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+                                    tmp = new MyMessage(`Benvenuto nel sistema ${results.entities['userName']}`, date.getTime(), "bot", topIntent);
+                                    this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
                                 }
                                 break;
                             case TIME_INTENT:
                                 await dc.context.sendActivity(`the time is HH:MM`);
                                 var date = new Date();
-                                tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot", topIntent);
-                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+                                tmp = new MyMessage(`the time is HH:MM`, date.getTime(), "bot", topIntent);
+                                this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
                                 break;
                             case ROUTER_TROUBLESHOOTING_INTENT:
                                 var date = new Date();
                                 await dc.context.sendActivity(`Have you already checked the FAQ at 
                                     https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`);
-                                tmp=new MyMessage(`Have you already checked the FAQ at 
+                                tmp = new MyMessage(`Have you already checked the FAQ at 
                                     https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`, date.getTime(), "bot", topIntent);
-                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+                                this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
                                 break;
                             case ROUTER_INSTALLATION:
                                 var date = new Date();
                                 await dc.context.sendActivity("Guida all' installazione");
-                                tmp=new MyMessage(`Help all'installazione`,date.getTime(), "bot", topIntent);
-                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+                                tmp = new MyMessage(`Help all'installazione`,date.getTime(), "bot", topIntent);
+                                this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
                                 break;
                             case ROUTER_INFO:
                                 var date = new Date();
                                 await dc.context.sendActivity("Il tuo router non è pro quanto il mio");
-                                tmp=new MyMessage(`Help all'installazione`,date.getTime(), "bot", topIntent);
-                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+                                tmp = new MyMessage(`Help all'installazione`,date.getTime(), "bot", topIntent);
+                                this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
                                 break;
                             case NONE_INTENT:
                             default:
@@ -231,8 +222,8 @@ class BasicBot {
                                 // to the user or we 
                                 var date = new Date();
                                 await dc.context.sendActivity(`Sorry i can't understand what you are saying`);
-                                tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot", topIntent);
-                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+                                tmp = new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot", topIntent);
+                                this.arrayconversazioni[this.arrayconversazioni.length - 1].addMessage(tmp);
                                 break;
                         }
                         break;
