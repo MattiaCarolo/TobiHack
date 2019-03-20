@@ -174,6 +174,7 @@ class BasicBot {
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_TROUBLESHOOTING_INTENT:
+                                troubleshoot: 
                                 await dc.context.sendActivity(`Have you already checked the FAQ at 
                                     https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`);
                                 tmp=new MyMessage(`Have you already checked the FAQ at 
@@ -191,10 +192,10 @@ class BasicBot {
                             case NONE_INTENT:
                             default:
                                 // None or no intent identified, either way, let's provide some help
-                                // to the user
+                                // to the user or we 
                                 await dc.context.sendActivity(`Sorry i can't understand what you are saying`);
                                 tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot");
-                                this.listaconversazioni.addMessage(tmp);
+                                this.listaconversazioni.addMessage(tmp); continue troubleshoot;
                                 break;
                         }
                         break;
