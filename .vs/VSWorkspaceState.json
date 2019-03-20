@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\dialogs",
+    "\\dialogs\\greeting",
+    "\\dialogs\\routerInfo",
+    "\\dialogs\\welcome",
+    "\\dialogs\\welcome\\resources"
+  ],
+  "SelectedNode": "\\dialogs\\routerInfo\\routerOffer.js",
+  "PreviewInSolutionExplorer": false
+}

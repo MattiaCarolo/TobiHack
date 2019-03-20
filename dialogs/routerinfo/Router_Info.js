@@ -13,4 +13,4 @@ class RouterInfo {
     }
 };
 
-exports.UserProfile = UserProfile;
+exports.RouterInfo = RouterInfo;

@@ -29,7 +29,7 @@ const AGE_PROMPT = 'age_prompt';
  * @param {String} dialogId unique identifier for this dialog instance
  * @param {PropertyStateAccessor} userProfileAccessor property accessor for user state
  */
-class RouterInfo extends ComponentDialog {
+class RouterInfoDialog extends ComponentDialog {
     constructor(conversationState, userState) {
         // Create a new state accessor property. See https://aka.ms/about-bot-state-accessors to learn more about bot state and state accessors.
         this.conversationState = conversationState;
@@ -121,4 +121,4 @@ class RouterInfo extends ComponentDialog {
     }
 }
 
-exports.RouterInfo = Greeting;
+exports.RouterInfoDialog = RouterInfoDialog;
