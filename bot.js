@@ -1,3 +1,4 @@
+/* global UserProfile */
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -11,6 +12,8 @@ const { DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 const { UserProfile } = require('./dialogs/greeting/userProfile');
 const { WelcomeCard } = require('./dialogs/welcome');
 const { GreetingDialog } = require('./dialogs/greeting');
+const { MyMessage } = require('./mymessage');
+const { MyConversation } = require('./myconversation');
 
 // Greeting Dialog ID
 const GREETING_DIALOG = 'greetingDialog';
@@ -27,6 +30,8 @@ const GREETING_INTENT = 'Greeting';
 const CANCEL_INTENT = 'Cancel';
 const HELP_INTENT = 'Help';
 const NONE_INTENT = 'None';
+const TIME_INTENT = 'Time';
+const ROUTER_INTENT = 'RouterHelp';
 
 // Supported LUIS Entities, defined in ./dialogs/greeting/resources/greeting.lu
 const USER_NAME_ENTITIES = ['userName', 'userName_patternAny'];
@@ -80,6 +85,11 @@ class BasicBot {
 
         this.conversationState = conversationState;
         this.userState = userState;
+        
+        
+        
+        this.listaconversazioni=new MyConversation();
+        
     }
 
     /**
@@ -96,6 +106,16 @@ class BasicBot {
         // Message activities may contain text, speech, interactive cards, and binary or unknown attachments.
         // see https://aka.ms/about-bot-activity-message to learn more about the message and other activity types
         if (context.activity.type === ActivityTypes.Message) {
+            
+            if(this.listaconversazioni==undefined)
+                this.listaconversazioni=new MyConversation();
+            
+            let tmp=new MyMessage(context.activity.text, context.activity.timestamp, context.activity.channelId);
+            this.listaconversazioni.addMessage(tmp);
+            
+            console.log(this.listaconversazioni);
+            
+            
             let dialogResult;
             // Create a dialog context
             const dc = await this.dialogs.createContext(context);
@@ -128,18 +148,45 @@ class BasicBot {
                 switch (dialogResult.status) {
                     // dc.continueDialog() returns DialogTurnStatus.empty if there are no active dialogs
                     case DialogTurnStatus.empty:
-                        // Determine what we should do based on the top intent from LUIS.
+                        // Determine what we should do based on the top intent from LUIS.                  
                         switch (topIntent) {
                             case GREETING_INTENT:
-                                await dc.beginDialog(GREETING_DIALOG);
+                                //await dc.beginDialog(GREETING_DIALOG);
+                                if (results.entities['userName'] === undefined){
+                                    await dc.context.sendActivity(`sei stupido`);
+                                    var date = new Date();
+                                    tmp=new MyMessage(`sei stupido`, date.getTime(), "bot");
+                                    this.listaconversazioni.addMessage(tmp);
+                                }
+                                else{
+                                    await dc.context.sendActivity(`sei stupido ${results.entities['userName']}`);
+                                    var date = new Date();
+                                    tmp=new MyMessage(`sei stupido ${results.entities['userName']}`, date.getTime(), "bot");
+                                    this.listaconversazioni.addMessage(tmp);
+                                }
+                                break;
+                            case TIME_INTENT:
+                                await dc.context.sendActivity(`the time is HH:MM`);
+                                var date = new Date();
+                                tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot");
+                                this.listaconversazioni.addMessage(tmp);
+                                break;
+                            case ROUTER_INTENT:
+                                await dc.context.sendActivity(`Have you tried turning it off and on again?`);
+                                var date = new Date();
+                                tmp=new MyMessage(`Have you tried turning it off and on again?`, date.getTime(), "bot");
+                                this.listaconversazioni.addMessage(tmp);
                                 break;
                             case NONE_INTENT:
                             default:
                                 // None or no intent identified, either way, let's provide some help
                                 // to the user
-                                await dc.context.sendActivity(`I didn't understand what you just said to me.`);
+                                await dc.context.sendActivity(`Wat did u just said to me?!?`);
+                                var date = new Date();
+                                tmp=new MyMessage(`Wat did u just said to me?!?`, date.getTime(), "bot");
+                                this.listaconversazioni.addMessage(tmp);
                                 break;
-                            }
+                        }
                         break;
                     case DialogTurnStatus.waiting:
                         // The active dialog is waiting for a response from the user, so do nothing.
