@@ -31,7 +31,9 @@ const CANCEL_INTENT = 'Cancel';
 const HELP_INTENT = 'Help';
 const NONE_INTENT = 'None';
 const TIME_INTENT = 'Time';
-const ROUTER_INTENT = 'RouterHelp';
+const ROUTER_TROUBLESHOOTING_INTENT = 'RouterTroubleshooting';
+const ROUTER_INSTALLATION = 'RouterInstallation';
+const ROUTER_INFO = 'RouteInfo';
 
 // Supported LUIS Entities, defined in ./dialogs/greeting/resources/greeting.lu
 const USER_NAME_ENTITIES = ['userName', 'userName_patternAny'];
@@ -171,18 +173,20 @@ class BasicBot {
                                 tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot");
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
-                            case ROUTER_INTENT:
+                            case ROUTER_TROUBLESHOOTING_INTENT:
                                 await dc.context.sendActivity(`Have you tried turning it off and on again?`);
-                                var date = new Date();
                                 tmp=new MyMessage(`Have you tried turning it off and on again?`, date.getTime(), "bot");
                                 this.listaconversazioni.addMessage(tmp);
+                                break;
+                            case ROUTER_INSTALLATION:
+                                break;
+                            case ROUTER_INFO:
                                 break;
                             case NONE_INTENT:
                             default:
                                 // None or no intent identified, either way, let's provide some help
                                 // to the user
                                 await dc.context.sendActivity(`Wat did u just said to me?!?`);
-                                var date = new Date();
                                 tmp=new MyMessage(`Wat did u just said to me?!?`, date.getTime(), "bot");
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
