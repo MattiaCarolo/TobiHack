@@ -153,15 +153,15 @@ class BasicBot {
                             case GREETING_INTENT:
                                 //await dc.beginDialog(GREETING_DIALOG);
                                 if (results.entities['userName'] === undefined){
-                                    await dc.context.sendActivity(`sei stupido`);
+                                    await dc.context.sendActivity(`greet`);
                                     var date = new Date();
-                                    tmp=new MyMessage(`sei stupido`, date.getTime(), "bot");
+                                    tmp=new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot");
                                     this.listaconversazioni.addMessage(tmp);
                                 }
                                 else{
-                                    await dc.context.sendActivity(`sei stupido ${results.entities['userName']}`);
+                                    await dc.context.sendActivity(`Benvenuto nel sistema ${results.entities['userName']}`);
                                     var date = new Date();
-                                    tmp=new MyMessage(`sei stupido ${results.entities['userName']}`, date.getTime(), "bot");
+                                    tmp=new MyMessage(`Benvenuto nel sistema ${results.entities['userName']}`, date.getTime(), "bot");
                                     this.listaconversazioni.addMessage(tmp);
                                 }
                                 break;
