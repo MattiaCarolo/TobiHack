@@ -6,7 +6,7 @@
 // Import required pckages
 const path = require('path');
 const restify = require('restify');
-const stack = require('./stack');
+
 // Import required bot services. See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter, MemoryStorage, ConversationState, UserState } = require('botbuilder');
 // Import required bot configuration.

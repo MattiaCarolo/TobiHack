@@ -41,18 +41,7 @@ class Stack {
         for (var i = 0; i < this.items.length; i++) 
             str += this.items[i] + " "; 
         return str; 
-    }
-    
-    searchContext(value){
-        var inputText = value;
-        if (this.items.indexOf(inputText) > -1) {
-            alert("item found");
-            return this.items[this.items.indexOf(inputText)];
-        }
-        else {
-            alert("item not found");
-        }
-    }
+    } 
 
 };
 
