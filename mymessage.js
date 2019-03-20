@@ -8,6 +8,10 @@ class MyMessage {
         this.from = from || undefined;
         this.intent = intent || undefined
     }
+
+    getTimeMS() {
+        return this.time;
+    }
 };
 
 exports.MyMessage = MyMessage;
