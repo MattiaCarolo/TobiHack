@@ -12,7 +12,7 @@ class MyConversation {
 
     getLastMessageDateMS() {
         if (this.messages.length > 0) {
-            return (this.messages[this.messages.length - 1]).getTime();
+            return (this.messages[this.messages.length - 1]).getTimeMS();
         } else {
             return -1;
         }
