@@ -178,13 +178,13 @@ class BasicBot {
                                 await dc.context.sendActivity(`Have you already checked the FAQ at 
                                     https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`);
                                 tmp=new MyMessage(`Have you already checked the FAQ at 
-                                    https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`, date.getTime(), "bot");
+                                    https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`, "bot");
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_INSTALLATION:
-                                await dc.context.sendActivity(`the time is HH:MM`);
+                                await dc.context.sendActivity("Guida all' installazione");
                                 var date = new Date();
-                                tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot");
+                                tmp=new MyMessage(`Help all'installazione`, date.getTime(), "bot");
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_INFO:
