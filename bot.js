@@ -89,10 +89,45 @@ class BasicBot {
         this.userState = userState;
         
         
-        
-        this.listaconversazioni=new MyConversation();
-        
+        this.arrayconversazioni = [];
+
+        //inizializzazione di prova di arrayconversazioni
+
+
+
+        //prima di proseguire elimino le conversazioni vecchie
+        cancellaConversazioniVecchie(this.arrayconversazioni);
+        this.ultimaconversazione=new MyConversation();
+        this.arrayconversazioni.push(this.ultimaconversazione);
     }
+
+
+    differenzaTraDateMS( date1, date2 ) {
+        //Get 1 day in milliseconds
+        var one_day=1000*60*60*24;
+
+        // Calculate the difference in milliseconds
+        var difference_ms = date2 - date1;
+          
+        // Convert back to days and return
+        return Math.round(difference_ms/one_day); 
+      }
+
+
+    async cancellaConversazioniVecchie(arrayconversazioni) {
+        let i;
+        for(i = 0; i < arrayconversazioni.length; i++) {
+            let tmp = arrayconversazioni[i].getLastMessageDateMS();
+            var date = new Date();
+            if(tmp == -1 || differenzaTraDateMS(tmp ,date.getTime) > 28) {
+                arrayconversazioni.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
+
+
 
     /**
      * Driver code that does one of the following:
@@ -108,14 +143,10 @@ class BasicBot {
         // Message activities may contain text, speech, interactive cards, and binary or unknown attachments.
         // see https://aka.ms/about-bot-activity-message to learn more about the message and other activity types
         if (context.activity.type === ActivityTypes.Message) {
-            
-            if(this.listaconversazioni==undefined)
-                this.listaconversazioni=new MyConversation();
-            
+                        
             let tmp=new MyMessage(context.activity.text, context.activity.timestamp, context.activity.channelId);
-            this.listaconversazioni.addMessage(tmp);
-            
-            console.log(this.listaconversazioni);
+            this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
+            console.log(this.arrayconversazioni[this.arrayconversazioni.length-1]);
             
             
             let dialogResult;
@@ -158,20 +189,20 @@ class BasicBot {
                                     await dc.context.sendActivity(`greet`);
                                     var date = new Date();
                                     tmp=new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot");
-                                    this.listaconversazioni.addMessage(tmp);
+                                    this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 }
                                 else{
                                     await dc.context.sendActivity(`Benvenuto nel sistema ${results.entities['userName']}`);
                                     var date = new Date();
                                     tmp=new MyMessage(`Benvenuto nel sistema ${results.entities['userName']}`, date.getTime(), "bot");
-                                    this.listaconversazioni.addMessage(tmp);
+                                    this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 }
                                 break;
                             case TIME_INTENT:
                                 await dc.context.sendActivity(`the time is HH:MM`);
                                 var date = new Date();
                                 tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot");
-                                this.listaconversazioni.addMessage(tmp);
+                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 break;
                             case ROUTER_TROUBLESHOOTING_INTENT:
                                 var date = new Date();
@@ -179,12 +210,13 @@ class BasicBot {
                                     https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`);
                                 tmp=new MyMessage(`Have you already checked the FAQ at 
                                     https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`, "bot");
-                                this.listaconversazioni.addMessage(tmp);
+                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 break;
                             case ROUTER_INSTALLATION:
+                                var date = new Date();
                                 await dc.context.sendActivity("Guida all' installazione");
                                 tmp=new MyMessage(`Help all'installazione`,date.getTime(), "bot");
-                                this.listaconversazioni.addMessage(tmp);
+                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 break;
                             case ROUTER_INFO:
                                 break;
@@ -192,9 +224,10 @@ class BasicBot {
                             default:
                                 // None or no intent identified, either way, let's provide some help
                                 // to the user or we 
+                                var date = new Date();
                                 await dc.context.sendActivity(`Sorry i can't understand what you are saying`);
                                 tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot");
-                                this.listaconversazioni.addMessage(tmp);
+                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 break;
                         }
                         break;
