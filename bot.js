@@ -10,6 +10,8 @@ const { LuisRecognizer } = require('botbuilder-ai');
 const { DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 
 const { UserProfile } = require('./dialogs/greeting/userProfile');
+const { RouterInfo } = require('./dialogs/routerinfo/userProfile');
+const { RouterInstall } = require('./dialogs/routerinstall/userProfile');
 const { WelcomeCard } = require('./dialogs/welcome');
 const { GreetingDialog } = require('./dialogs/greeting');
 const { MyMessage } = require('./mymessage');
