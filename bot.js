@@ -157,20 +157,20 @@ class BasicBot {
                                 if (results.entities['userName'] === undefined){
                                     await dc.context.sendActivity(`greet`);
                                     var date = new Date();
-                                    tmp=new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot");
+                                    tmp=new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot",topIntent);
                                     this.listaconversazioni.addMessage(tmp);
                                 }
                                 else{
                                     await dc.context.sendActivity(`Benvenuto nel sistema ${results.entities['userName']}`);
                                     var date = new Date();
-                                    tmp=new MyMessage(`Benvenuto nel sistema ${results.entities['userName']}`, date.getTime(), "bot");
+                                    tmp=new MyMessage(`Benvenuto nel sistema ${results.entities['userName']}`, date.getTime(), "bot",topIntent);
                                     this.listaconversazioni.addMessage(tmp);
                                 }
                                 break;
                             case TIME_INTENT:
                                 await dc.context.sendActivity(`the time is HH:MM`);
                                 var date = new Date();
-                                tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot");
+                                tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot",topIntent);
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_TROUBLESHOOTING_INTENT:
@@ -178,12 +178,12 @@ class BasicBot {
                                 await dc.context.sendActivity(`Have you already checked the FAQ at 
                                     https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`);
                                 tmp=new MyMessage(`Have you already checked the FAQ at 
-                                    https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`, "bot");
+                                    https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`,date.getTime(), "bot",topIntent);
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_INSTALLATION:
                                 await dc.context.sendActivity("Guida all' installazione");
-                                tmp=new MyMessage(`Help all'installazione`,date.getTime(), "bot");
+                                tmp=new MyMessage(`Help all'installazione`,date.getTime(), "bot",topIntent);
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_INFO:
@@ -193,7 +193,7 @@ class BasicBot {
                                 // None or no intent identified, either way, let's provide some help
                                 // to the user or we 
                                 await dc.context.sendActivity(`Sorry i can't understand what you are saying`);
-                                tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot");
+                                tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot",topIntent);
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                         }
