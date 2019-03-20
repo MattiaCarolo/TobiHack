@@ -12,9 +12,13 @@ const { DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 const { UserProfile } = require('./dialogs/greeting/userProfile');
 const { WelcomeCard } = require('./dialogs/welcome');
 const { GreetingDialog } = require('./dialogs/greeting');
+const { RouterInfoDialog } = require('./dialogs/routerinfo');
+const { MyMessage } = require('./mymessage');
+const { MyConversation } = require('./myconversation');
 
 // Greeting Dialog ID
 const GREETING_DIALOG = 'greetingDialog';
+const ROUTER_INFO_DIALOG = 'routerInfoDialog';
 
 // State Accessor Properties
 const DIALOG_STATE_PROPERTY = 'dialogState';
@@ -29,11 +33,14 @@ const CANCEL_INTENT = 'Cancel';
 const HELP_INTENT = 'Help';
 const NONE_INTENT = 'None';
 const TIME_INTENT = 'Time';
-const ROUTER_INTENT = 'RouterHelp';
+const ROUTER_TROUBLESHOOTING_INTENT = 'RouterTroubleshooting';
+const ROUTER_INSTALLATION = 'RouterInstallation';
+const ROUTER_INFO = 'RouteInfo';
 
 // Supported LUIS Entities, defined in ./dialogs/greeting/resources/greeting.lu
 const USER_NAME_ENTITIES = ['userName', 'userName_patternAny'];
 const USER_LOCATION_ENTITIES = ['userLocation', 'userLocation_patternAny'];
+const ROUTER_INFO_ENTITIES = ['routerName', 'routerType', 'routerOffer', 'routerFirmware'];
 
 /**
  * Demonstrates the following concepts:
@@ -80,9 +87,15 @@ class BasicBot {
         this.dialogs = new DialogSet(this.dialogState);
         // Add the Greeting dialog to the set
         this.dialogs.add(new GreetingDialog(GREETING_DIALOG, this.userProfileAccessor));
+        this.dialogs.add(new RouterInfoDialog(ROUTER_INFO_DIALOG));
 
         this.conversationState = conversationState;
         this.userState = userState;
+        
+        
+        
+        this.listaconversazioni=new MyConversation();
+        
     }
 
     /**
@@ -99,6 +112,16 @@ class BasicBot {
         // Message activities may contain text, speech, interactive cards, and binary or unknown attachments.
         // see https://aka.ms/about-bot-activity-message to learn more about the message and other activity types
         if (context.activity.type === ActivityTypes.Message) {
+            
+            if(this.listaconversazioni==undefined)
+                this.listaconversazioni=new MyConversation();
+            
+            let tmp=new MyMessage(context.activity.text, context.activity.timestamp, context.activity.channelId);
+            this.listaconversazioni.addMessage(tmp);
+            
+            console.log(this.listaconversazioni);
+            
+            
             let dialogResult;
             // Create a dialog context
             const dc = await this.dialogs.createContext(context);
@@ -135,19 +158,49 @@ class BasicBot {
                         switch (topIntent) {
                             case GREETING_INTENT:
                                 //await dc.beginDialog(GREETING_DIALOG);
-                                await dc.beginDialog(GREETING_DIALOG); 
+                                if (results.entities['userName'] === undefined){
+                                    await dc.context.sendActivity(`greet`);
+                                    var date = new Date();
+                                    tmp=new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot");
+                                    this.listaconversazioni.addMessage(tmp);
+                                }
+                                else{
+                                    await dc.context.sendActivity(`Benvenuto nel sistema ${results.entities['userName']}`);
+                                    var date = new Date();
+                                    tmp=new MyMessage(`Benvenuto nel sistema ${results.entities['userName']}`, date.getTime(), "bot");
+                                    this.listaconversazioni.addMessage(tmp);
+                                }
                                 break;
                             case TIME_INTENT:
                                 await dc.context.sendActivity(`the time is HH:MM`);
+                                var date = new Date();
+                                tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot");
+                                this.listaconversazioni.addMessage(tmp);
                                 break;
-                            case ROUTER_INTENT:
-                                await dc.context.sendActivity(`Have you tried turning it off and on again?`);
+                            case ROUTER_TROUBLESHOOTING_INTENT:
+                                var date = new Date();
+                                await dc.context.sendActivity(`Have you already checked the FAQ at 
+                                    https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`);
+                                tmp=new MyMessage(`Have you already checked the FAQ at 
+                                    https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`, "bot");
+                                this.listaconversazioni.addMessage(tmp);
+                                break;
+                            case ROUTER_INSTALLATION:
+                                var date = new Date();
+                                await dc.context.sendActivity("Guida all' installazione");
+                                tmp=new MyMessage(`Help all'installazione`,date.getTime(), "bot");
+                                this.listaconversazioni.addMessage(tmp);
+                                break;
+                            case ROUTER_INFO:
+                                await dc.begindialog(ROUTER_INFO_DIALOG);
                                 break;
                             case NONE_INTENT:
                             default:
                                 // None or no intent identified, either way, let's provide some help
-                                // to the user
-                                await dc.context.sendActivity(`Wat did u just said to me faggot?!?`);
+                                // to the user or we 
+                                await dc.context.sendActivity(`Sorry i can't understand what you are saying`);
+                                tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot");
+                                this.listaconversazioni.addMessage(tmp);
                                 break;
                         }
                         break;
