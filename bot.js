@@ -195,7 +195,7 @@ class BasicBot {
                                 // to the user or we 
                                 await dc.context.sendActivity(`Sorry i can't understand what you are saying`);
                                 tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot");
-                                this.listaconversazioni.addMessage(tmp); continue troubleshoot;
+                                this.listaconversazioni.addMessage(tmp);
                                 break;
                         }
                         break;
