@@ -135,10 +135,7 @@ class BasicBot {
                         switch (topIntent) {
                             case GREETING_INTENT:
                                 //await dc.beginDialog(GREETING_DIALOG);
-                                if (results.entities['userName'] === undefined)
-                                    await dc.context.sendActivity(`sei stupido`);
-                                else
-                                    await dc.context.sendActivity(`sei stupido ${results.entities['userName']}`);
+                                await dc.beginDialog(GREETING_DIALOG); 
                                 break;
                             case TIME_INTENT:
                                 await dc.context.sendActivity(`the time is HH:MM`);
