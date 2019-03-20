@@ -96,7 +96,7 @@ class BasicBot {
 
 
         //prima di proseguire elimino le conversazioni vecchie
-        cancellaConversazioniVecchie(this.arrayconversazioni);
+        //cancellaConversazioniVecchie(this.arrayconversazioni);
         this.ultimaconversazione=new MyConversation();
         this.arrayconversazioni.push(this.ultimaconversazione);
     }
@@ -186,7 +186,6 @@ class BasicBot {
                             case GREETING_INTENT:
                                 await dc.beginDialog(GREETING_DIALOG);
                                 if (results.entities['userName'] === undefined){
-                                    await dc.context.sendActivity(`greet`);
                                     var date = new Date();
                                     tmp=new MyMessage(`Benvenuto nel sistema`, date.getTime(), "bot",topIntent);
                                     this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
@@ -219,6 +218,10 @@ class BasicBot {
                                 this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 break;
                             case ROUTER_INFO:
+                                var date = new Date();
+                                await dc.context.sendActivity("Il tuo router non è pro quanto il mio");
+                                tmp=new MyMessage(`Help all'installazione`,date.getTime(), "bot", topIntent);
+                                this.arrayconversazioni[this.arrayconversazioni.length-1].addMessage(tmp);
                                 break;
                             case NONE_INTENT:
                             default:
