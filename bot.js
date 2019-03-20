@@ -174,8 +174,9 @@ class BasicBot {
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_TROUBLESHOOTING_INTENT:
-                                await dc.context.sendActivity(`Have you tried turning it off and on again?`);
-                                tmp=new MyMessage(`Have you tried turning it off and on again?`, date.getTime(), "bot");
+                                await dc.context.sendActivity(`Have you already checked the FAQ at <placehplder>?`);
+                                tmp=new MyMessage(`Have you already checked the FAQ at 
+                                    https://www.vodafone.it/portal/Privati/Supporto/Fibra--ADSL-e-Telefono/Installare-e-configurare/Vodafone-Station-Revolution?`, date.getTime(), "bot");
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_INSTALLATION:
