@@ -181,6 +181,10 @@ class BasicBot {
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_INSTALLATION:
+                                await dc.context.sendActivity(`the time is HH:MM`);
+                                var date = new Date();
+                                tmp=new MyMessage(`the time is HH:MM`, date.getTime(), "bot");
+                                this.listaconversazioni.addMessage(tmp);
                                 break;
                             case ROUTER_INFO:
                                 break;
@@ -188,8 +192,8 @@ class BasicBot {
                             default:
                                 // None or no intent identified, either way, let's provide some help
                                 // to the user
-                                await dc.context.sendActivity(`Wat did u just said to me?!?`);
-                                tmp=new MyMessage(`Wat did u just said to me?!?`, date.getTime(), "bot");
+                                await dc.context.sendActivity(`Sorry i can't understand what you are saying`);
+                                tmp=new MyMessage(`Sorry i can't understand what you are saying`, date.getTime(), "bot");
                                 this.listaconversazioni.addMessage(tmp);
                                 break;
                         }
