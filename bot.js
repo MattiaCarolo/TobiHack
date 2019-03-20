@@ -184,7 +184,7 @@ class BasicBot {
                         // Determine what we should do based on the top intent from LUIS.                  
                         switch (topIntent) {
                             case GREETING_INTENT:
-                                //await dc.beginDialog(GREETING_DIALOG);
+                                await dc.beginDialog(GREETING_DIALOG);
                                 if (results.entities['userName'] === undefined){
                                     await dc.context.sendActivity(`greet`);
                                     var date = new Date();
