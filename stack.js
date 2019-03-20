@@ -54,6 +54,10 @@ class Stack {
         }
     }
 
+    countUnique() {
+        return new Set(this.items).size;
+      }
+
 };
 
 exports.Stack = Stack;

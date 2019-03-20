@@ -10,8 +10,8 @@ const { LuisRecognizer } = require('botbuilder-ai');
 const { DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 
 const { UserProfile } = require('./dialogs/greeting/userProfile');
-const { RouterInfo } = require('./dialogs/routerinfo/userProfile');
-const { RouterInstall } = require('./dialogs/routerinstall/userProfile');
+//const { RouterInfo } = require('./dialogs/routerinfo/userProfile');
+//const { RouterInstall } = require('./dialogs/routerinstall/userProfile');
 const { WelcomeCard } = require('./dialogs/welcome');
 const { GreetingDialog } = require('./dialogs/greeting');
 const { MyMessage } = require('./mymessage');
@@ -56,8 +56,7 @@ class BasicBot {
      * 1. StatePropertyAccessor for conversation state
      * 2. StatePropertyAccess for user state
      * 3. LUIS client
-     * 4. DialogSet to handle our GreetingDialog
-     *
+     * 4. DialogSet to handle our GreetingDialogi
      * @param {ConversationState} conversationState property accessor
      * @param {UserState} userState property accessor
      * @param {BotConfiguration} botConfig contents of the .bot file
