@@ -35,12 +35,12 @@
     {
       "type": "Action.OpenUrl",
       "title": "Ask a question",
-      "url": "https://stackoverflow.com/questions/tagged/botframework"
+      "url": "https://google.com"
     },
     {
       "type": "Action.OpenUrl",
       "title": "Learn how to deploy",
-      "url": "https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-deploy-azure?view=azure-bot-service-4.0"
+      "url": "https://www.google.com/search?client=ubuntu&channel=fs&q=how+to+deploy+a+bot&ie=utf-8&oe=utf-8"
     }
   ]
 }

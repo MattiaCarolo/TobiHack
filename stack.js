@@ -43,8 +43,8 @@ class Stack {
         return str; 
     } 
 
-    countUnique() {
-        return new Set(this.items).size;
+    findunique(){
+        return new Set(this.items);
       }
 
 };
